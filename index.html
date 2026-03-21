@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Reset básico e fonte */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        header h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        /* Container principal */
+        main {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* Seções de input */
+        .log {
+            margin-bottom: 15px;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        /* Efeito de foco nos inputs */
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #007bff;
+        }
+
+        /* Seção do botão */
+        #enviar {
+            margin-top: 10px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="submit"]:active {
+            transform: scale(0.98);
+        }
+
+        /* Responsividade para celulares pequenos */
+        @media (max-width: 480px) {
+            main {
+                width: 90%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Login</h1>
+    </header>
+    <main>
+        <!-- Mudei o ID da senha e troquei o botão para type="submit" -->
+        <form id="meuFormulario">
+            <section>
+                <section class="log">
+                    <input type="email" name="auth-e" id="email" placeholder="exemplo@email.com" required>
+                </section>
+                <section class="log">
+                    <input type="password" name="auth-p" id="senha" placeholder="senha" required>
+                </section>
+                <section id="enviar">
+                    <input type="submit" value="Entrar">
+                </section>
+            </section>
+        </form>
+    </main>
+
+    <script>
+        const form = document.getElementById('meuFormulario');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o recarregamento da página
+            
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            
+            if (email === "" || senha === "") {
+                alert("Por favor, preencha todos os campos!");
+            } else {
+                alert("Login realizado com sucesso para: " + email);
+                console.log("E-mail:", email);
+                console.log("Senha:", senha);
+            }
+        });
+    </script>
+</body>
+</html>
