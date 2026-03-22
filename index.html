@@ -93,25 +93,24 @@
     </main>
 
     <script>
-       const usuariosCadastrados = [
-    { email: "joao@email.com", senha: "123" },
-    { email: "maria@email.com", senha: "456" },
-    { email: "admin@email.com", senha: "admin" }
-];
+       const form = document.getElementById('meuFormulario');
+
+// Definindo um usuário "correto" para teste
+const USUARIO_CORRETO = "admin@email.com";
+const SENHA_CORRETA = "adminadmin";
 
 form.addEventListener('submit', function(event) {
-    event.preventDefault();
+    const emailDigitado = document.getElementById('email').value;
+    const senhaDigitada = document.getElementById('senha').value;
 
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
-
-    // Procura na lista se existe um usuário com esse email e essa senha
-    const usuarioEncontrado = usuariosCadastrados.find(u => u.email === email && u.senha === senha);
-
-    if (usuarioEncontrado) {
-        window.location.href = "on-off.html";
+    // Comparação
+    if (emailDigitado === USUARIO_CORRETO && senhaDigitada === SENHA_CORRETA) {
+        alert("Login realizado com sucesso!");
+        window.location.href = "on-off.html"; // Redireciona
     } else {
-        alert("Usuário não encontrado ou senha inválida!");
+        alert("E-mail ou senha incorretos. Tente novamente.");
+        // Opcional: limpa o campo de senha se errar
+        document.getElementById('senha').value = "";
     }
 });
     </script>
