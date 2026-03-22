@@ -1,0 +1,55 @@
+ h1 {
+     text-align: center;
+     font-family: 'Courier New', Courier, monospace;
+ }
+
+ body {
+     background-color: #e7f5ff;
+ }
+
+ .btn {
+     position: absolute;
+     top: 10%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+ }
+
+ .status {
+     position: absolute;
+     top: 17%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     font-family: 'Courier New', Courier, monospace;
+     font-size: larger;
+     font-weight: bolder;
+ }
+
+ button {
+     padding: 15px 35px;
+     font-size: 18px;
+     border: none;
+     border-radius: 10px;
+     cursor: pointer;
+     color: white;
+     font-weight: bold;
+     transition: all 0.3s ease;
+     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+ }
+
+ #on {
+     background: #28a745;
+ }
+
+ #on:hover {
+     background: #218838;
+     transform: scale(1.05);
+ }
+
+ #off {
+     background: #dc3545;
+ }
+
+ #off:hover {
+     background: #c82333;
+     transform: scale(1.05);
+ }

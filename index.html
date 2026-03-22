@@ -3,116 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login Firebase</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #e7f5ff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        header h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        main {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .log {
-            margin-bottom: 15px;
-        }
-
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-            border-color: #007bff;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
+        /* CSS que criamos antes */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background: #f0f2f5; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        main { background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        header h1 { margin-bottom: 20px; color: #333; }
+        .log { margin-bottom: 15px; }
+        input[type="email"], input[type="password"] { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; }
+        input[type="submit"] { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        input[type="submit"]:hover { background: #0056b3; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>login: admin@email.com / senha: adminadmin</h1>
-    </header>
+    <header><h1>Login</h1></header>
     <main>
         <form id="meuFormulario">
-            <section>
-                <section class="log">
-                    <input type="email" id="email" placeholder="exemplo@email.com" required>
-                </section>
-                <section class="log">
-                    <input type="password" id="senha" placeholder="senha" required>
-                </section>
-                <section id="enviar">
-                    <input type="submit" value="Entrar">
-                </section>
-            </section>
+            <div class="log">
+                <input type="email" id="email" placeholder="E-mail" required>
+            </div>
+            <div class="log">
+                <input type="password" id="senha" placeholder="Senha" required>
+            </div>
+            <input type="submit" value="Entrar">
         </form>
     </main>
 
-    <script>
-       const form = document.getElementById('meuFormulario');
+    <!-- IMPORTANTE: type="module" para usar o Firebase moderno -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "firebase/app";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Definindo um usuário "correto" para teste
-const USUARIO_CORRETO = "admin@email.com";
-const SENHA_CORRETA = "adminadmin";
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDq9cGqDjgWb4nsIW-cCsnOuUjkgFViihQ",
+          authDomain: "sa5-iot.firebaseapp.com",
+          databaseURL: "https://sa5-iot-default-rtdb.firebaseio.com",
+          projectId: "sa5-iot",
+          storageBucket: "sa5-iot.firebasestorage.app",
+          messagingSenderId: "830559223381",
+          appId: "1:830559223381:web:12373109293c4fd4289edc"
+        };
 
-form.addEventListener('submit', function(event) {
-    const emailDigitado = document.getElementById('email').value;
-    const senhaDigitada = document.getElementById('senha').value;
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-    // Comparação
-    if (emailDigitado === USUARIO_CORRETO && senhaDigitada === SENHA_CORRETA) {
-        alert("Login realizado com sucesso!");
-        window.location.href = "on-off.html"; // Redireciona
-    } else {
-        alert("E-mail ou senha incorretos. Tente novamente.");
-        // Opcional: limpa o campo de senha se errar
-        document.getElementById('senha').value = "";
-    }
-});
+        const form = document.getElementById('meuFormulario');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+
+            // Função do Firebase para fazer login
+            signInWithEmailAndPassword(auth, email, senha)
+                .then((userCredential) => {
+                    // Login com sucesso
+                    alert("Bem-vindo!");
+                    window.location.href = "on-off.html";
+                })
+                .catch((error) => {
+                    // Erros comuns (Senha errada ou usuário não existe)
+                    const errorCode = error.code;
+                    if (errorCode === 'auth/invalid-credential') {
+                        alert("E-mail ou senha incorretos.");
+                    } else {
+                        alert("Erro ao fazer login: " + error.message);
+                    }
+                });
+        });
     </script>
 </body>
 </html>
