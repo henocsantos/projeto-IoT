@@ -5,15 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Teste</title>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #eee; }
-        main { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        .log { margin-bottom: 10px; }
-        input { display: block; width: 100%; padding: 10px; margin-top: 5px; }
-        input[type="submit"] { background: blue; color: white; border: none; cursor: pointer; }
-    </style>
-</head>
-<body>
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        body {
+            background-color: #e7f5ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        header h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        main {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .log {
+            margin-bottom: 15px;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #007bff;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head> 
+<body>
+    <header>
+        <h1>Login Teste</h1>
+    </header>
     <main>
         <h1>Login</h1>
         <!-- O id deve ser único -->
@@ -31,7 +93,59 @@
         </form>
     </main>
 
-    <script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDq9cGqDjgWb4nsIW-cCsnOuUjkgFViihQ",
+        authDomain: "sa5-iot.firebaseapp.com",
+        databaseURL: "https://sa5-iot-default-rtdb.firebaseio.com",
+        projectId: "sa5-iot",
+        storageBucket: "sa5-iot.firebasestorage.app",
+        messagingSenderId: "830559223381",
+        appId: "1:830559223381:web:12373109293c4fd4289edc"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+        const form = document.getElementById('meuFormulario');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // IMPORTANTE: impede o refresh da página
+
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+
+            console.log("Tentando autenticar no Firebase...");
+
+            signInWithEmailAndPassword(auth, email, senha)
+                .then((userCredential) => {
+                    console.log("Sucesso!");
+                    // Redireciona para a página on-off
+                    window.location.href = "on-off.html";
+                })
+                .catch((error) => {
+                    console.error("Erro Firebase:", error.code);
+                    
+                    // Tratamento amigável de erros
+                    if (error.code === 'auth/invalid-credential') {
+                        alert("E-mail ou senha incorretos.");
+                    } else if (error.code === 'auth/user-not-found') {
+                        alert("Usuário não cadastrado.");
+                    } else {
+                        alert("Erro: " + error.message);
+                    }
+                });
+        });
+    </script>
+    <!--<script>
         const form = document.getElementById('meuFormulario');
 
         form.addEventListener('submit', function(event) {
@@ -52,6 +166,6 @@
                 alert("Para este teste use: teste@teste.com e senha 123");
             }
         });
-    </script>
+    </script>-->
 </body>
 </html>
