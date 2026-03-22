@@ -93,25 +93,27 @@
     </main>
 
     <script>
-        const usuariosCadastrados = [
-            { email: "admin@email.com", senha: "adminadmin" },
-        ];
-        
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-        
-            const email = document.getElementById('email').value;
-            const senha = document.getElementById('senha').value;
-        
-            // Procura na lista se existe um usuário com esse email e essa senha
-            const usuarioEncontrado = usuariosCadastrados.find(u => u.email === email && u.senha === senha);
-        
-            if (usuarioEncontrado) {
-                window.location.href = "on-off.html";
-            } else {
-                alert("Usuário não encontrado ou senha inválida!");
-            }
-        });
+       const usuariosCadastrados = [
+    { email: "joao@email.com", senha: "123" },
+    { email: "maria@email.com", senha: "456" },
+    { email: "admin@email.com", senha: "admin" }
+];
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
+
+    // Procura na lista se existe um usuário com esse email e essa senha
+    const usuarioEncontrado = usuariosCadastrados.find(u => u.email === email && u.senha === senha);
+
+    if (usuarioEncontrado) {
+        window.location.href = "on-off.html";
+    } else {
+        alert("Usuário não encontrado ou senha inválida!");
+    }
+});
     </script>
 </body>
 </html>
