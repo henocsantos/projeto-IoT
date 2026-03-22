@@ -7,11 +7,38 @@
     <title>SA 5</title>
 </head>
 <body>
-    
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+
+    // Use a MESMA config que usou no login
+    const firebaseConfig = {
+      apiKey: "AIzaSyDq9cGqDjgWb4nsIW-cCsnOuUjkgFViihQ",
+      authDomain: "sa5-iot.firebaseapp.com",
+      databaseURL: "https://sa5-iot-default-rtdb.firebaseio.com",
+      projectId: "sa5-iot",
+      storageBucket: "sa5-iot.firebasestorage.app",
+      messagingSenderId: "830559223381",
+      appId: "1:830559223381:web:12373109293c4fd4289edc"
+    }; 
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Oculta a página até confirmar o login
+    document.body.style.display = "none";
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // Usuário logado! Mostra a página
+            document.body.style.display = "block";
+        } else {
+            // Usuário não logado! Expulsa para o login
+            window.location.href = "index.html"; 
+        }
+    });
+</script>
         <header>
-            <section>
                 <h1>Controle de LED</h1>
-            </section>
         </header>
     <main>    
         <SECTION class="btn">
